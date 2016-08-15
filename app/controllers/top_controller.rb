@@ -1,12 +1,12 @@
 class TopController < ApplicationController
   def index
-    @post = Post.new
+    @hatebu = Hatebu.new
     @hnrss = Hnrss.new
 
-    posts = @post.fetch
+    hatebu_posts = @hatebu.fetch
     hnrss_posts = @hnrss.fetch
 
-    feeds = posts.concat(hnrss_posts)
+    feeds = hatebu_posts.concat(hnrss_posts)
 
     render json: feeds.flatten.sort! { |a,b| b[:date] <=> a[:date] }
   end
