@@ -5,12 +5,13 @@ class Hatebu
   require 'rss'
   require 'open-uri'
 
+  HOTENTRY_URL = 'http://b.hatena.ne.jp/hotentry/it.rss'
   BASE_URL = 'http://b.hatena.ne.jp/search/tag'
-  TAGS = ['Rails', 'Swift']
 
   def fetch(tag = nil, sort = nil)
-    tags = Array.new
-    tags = tag.blank? ? TAGS : tags.push(tag)
+    return fetch_feed(HOTENTRY_URL) if tag.blank?
+
+    tags = tag.split(',')
 
     sort_param = sort.present? ? "&sort=#{sort}" : ""
 

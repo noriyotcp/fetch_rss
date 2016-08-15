@@ -6,15 +6,18 @@ class Hnrss
   require 'open-uri'
 
   BASE_URL = 'http://hnrss.org/newest'
-  TAGS = ['Rails', 'Swift']
 
   def fetch(tag = nil, points = nil)
-    tags = Array.new
-    tags = tag.blank? ? TAGS : tags.push(tag)
+    return fetch_feed(BASE_URL) if tag.blank? && points.blank?
+
+    if tag.present?
+      tags = tag.split(',')
+      urls = tags.map { |t| create_url_by_tag(t) }
+    else
+      urls = Array.new.push(create_url_by_tag)
+    end
 
     sort_param = points.present? ? "&points=#{points}" : ""
-
-    urls = tags.map { |t| create_url_by_tag(t) }
     return urls.map { |url| fetch_feed(url + sort_param) }
   end
 
@@ -31,7 +34,7 @@ class Hnrss
     end
   end
 
-  def create_url_by_tag(tag)
+  def create_url_by_tag(tag = nil)
     return "#{BASE_URL}?q=#{tag}"
   end
 end
