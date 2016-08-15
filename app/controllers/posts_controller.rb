@@ -15,13 +15,13 @@ class PostsController < ApplicationController
 
   def fetch_by_recent
     urls = TAGS.map { |tag| create_url_by_tag(tag) }
-    feeds = urls.map { |url| fetch_feed(url+"&sort={SORT_BY[:recent}") }
+    feeds = urls.map { |url| fetch_feed(url+"&sort=#{SORT_BY[:recent]}") }
     render json: feeds.flatten.sort! { |a,b| b[:date] <=> a[:date] }
   end
 
   def fetch_by_popular
     urls = TAGS.map { |tag| create_url_by_tag(tag) }
-    feeds = urls.map { |url| fetch_feed(url+"&sort={SORT_BY[:popular}") }
+    feeds = urls.map { |url| fetch_feed(url+"&sort=#{SORT_BY[:popular]}") }
     render json: feeds.flatten.sort! { |a,b| b[:date] <=> a[:date] }
   end
 
