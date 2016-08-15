@@ -4,7 +4,6 @@ class PostsController < ApplicationController
 
   BASE_URL = 'http://b.hatena.ne.jp/search/tag'
   TAGS = ['Rails', 'Swift']
-  SORT_BY = { recent: 'recent', popular: 'popular' }
 
   def fetch
     tags = Array.new
