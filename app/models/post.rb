@@ -8,13 +8,13 @@ class Post
   BASE_URL = 'http://b.hatena.ne.jp/search/tag'
   TAGS = ['Rails', 'Swift']
 
-  def fetch
+  def fetch(tag = nil, sort = nil)
     tags = Array.new
     tags = tag.blank? ? TAGS : tags.push(tag)
 
     sort_param = sort.present? ? "&sort=#{sort}" : ""
 
-    urls = tags.map { |tag| create_url_by_tag(tag) }
+    urls = tags.map { |t| create_url_by_tag(t) }
 
     return urls.map { |url| fetch_feed(url + sort_param) }
   end

@@ -8,13 +8,13 @@ class Hnrss
   BASE_URL = 'http://hnrss.org/newest'
   TAGS = ['Rails', 'Swift']
 
-  def fetch
+  def fetch(tag = nil, points = nil)
     tags = Array.new
     tags = tag.blank? ? TAGS : tags.push(tag)
 
     sort_param = points.present? ? "&points=#{points}" : ""
 
-    urls = tags.map { |tag| create_url_by_tag(tag) }
+    urls = tags.map { |t| create_url_by_tag(t) }
     return urls.map { |url| fetch_feed(url + sort_param) }
   end
 
