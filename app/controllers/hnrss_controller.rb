@@ -13,7 +13,6 @@ class HnrssController < ApplicationController
 
     urls = tags.map { |tag| create_url_by_tag(tag) }
     feeds = urls.map { |url| fetch_feed(url + sort_param) }
-    binding.pry
     render json: feeds.flatten.sort! { |a,b| b[:date] <=> a[:date] }
   end
 
