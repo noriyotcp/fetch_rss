@@ -2,26 +2,18 @@ class HnrssController < ApplicationController
   require 'rss'
   require 'open-uri'
 
-  # before_action :fetch_feed, only: [:fetch]
   BASE_URL = 'http://hnrss.org/newest'
   TAGS = ['Rails', 'Swift']
-  SORT_BY = { points: '100' }
 
   def fetch
-    urls = TAGS.map { |tag| create_url_by_tag(tag) }
-    feeds = urls.map { |url| fetch_feed(url) }
-    render json: feeds.flatten.sort! { |a,b| b[:date] <=> a[:date] }
-  end
+    tags = Array.new
+    tags = params[:tag].blank? ? TAGS : tags.push(params[:tag])
 
-  def fetch_by_recent
-    urls = TAGS.map { |tag| create_url_by_tag(tag) }
-    feeds = urls.map { |url| fetch_feed(url) }
-    render json: feeds.flatten.sort! { |a,b| b[:date] <=> a[:date] }
-  end
+    sort_param = params[:points].present? ? "&points=#{params[:points]}" : ""
 
-  def fetch_by_popular
-    urls = TAGS.map { |tag| create_url_by_tag(tag) }
-    feeds = urls.map { |url| fetch_feed(url+"&points=#{SORT_BY[:points]}") }
+    urls = tags.map { |tag| create_url_by_tag(tag) }
+    feeds = urls.map { |url| fetch_feed(url + sort_param) }
+    binding.pry
     render json: feeds.flatten.sort! { |a,b| b[:date] <=> a[:date] }
   end
 
@@ -41,5 +33,9 @@ class HnrssController < ApplicationController
 
   def create_url_by_tag(tag)
     return "#{BASE_URL}?q=#{tag}"
+  end
+
+  def hnrss_params
+    params.permit(:tag, :points)
   end
 end
