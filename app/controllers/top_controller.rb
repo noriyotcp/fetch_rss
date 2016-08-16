@@ -8,7 +8,7 @@ class TopController < ApplicationController
 
     feeds = hatebu_posts.concat(hnrss_posts)
 
-    render json: feeds.flatten.sort! { |a,b| b[:date] <=> a[:date] }
+    render json: feeds.flatten.sort! { |a, b| b[:date] <=> a[:date] }
   end
 
   private

@@ -1,9 +1,8 @@
 require 'test_helper'
 
 class HatebuControllerTest < ActionDispatch::IntegrationTest
-  test "should get fetch" do
-    get hatebu_fetch_url
+  test 'should get hatebu#fetch' do
+    get hatebu_url
     assert_response :success
   end
-
 end

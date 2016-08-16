@@ -5,7 +5,7 @@ class Hnrss
   require 'rss'
   require 'open-uri'
 
-  BASE_URL = 'http://hnrss.org/newest'
+  BASE_URL = 'http://hnrss.org/newest'.freeze
 
   def fetch(tag = nil, points = nil)
     return fetch_feed(BASE_URL) if tag.blank? && points.blank?
@@ -17,8 +17,8 @@ class Hnrss
       urls = Array.new.push(create_url_by_tag)
     end
 
-    sort_param = points.present? ? "&points=#{points}" : ""
-    return urls.map { |url| fetch_feed(url + sort_param) }
+    sort_param = points.present? ? "&points=#{points}" : ''
+    urls.map { |url| fetch_feed(url + sort_param) }
   end
 
   private
@@ -29,12 +29,12 @@ class Hnrss
     rss = open(@url, 'User-Agent' => ua)
     feed = RSS::Parser.parse(rss)
     rss.close
-    return feed.items.map do |i|
+    feed.items.map do |i|
       { link: i.link, title: i.title, desc: i.description, date: i.pubDate }
     end
   end
 
   def create_url_by_tag(tag = nil)
-    return "#{BASE_URL}?q=#{tag}"
+    "#{BASE_URL}?q=#{tag}"
   end
 end

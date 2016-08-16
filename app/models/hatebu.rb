@@ -5,19 +5,19 @@ class Hatebu
   require 'rss'
   require 'open-uri'
 
-  HOTENTRY_URL = 'http://b.hatena.ne.jp/hotentry/it.rss'
-  BASE_URL = 'http://b.hatena.ne.jp/search/tag'
+  HOTENTRY_URL = 'http://b.hatena.ne.jp/hotentry/it.rss'.freeze
+  BASE_URL = 'http://b.hatena.ne.jp/search/tag'.freeze
 
   def fetch(tag = nil, sort = nil)
     return fetch_feed(HOTENTRY_URL) if tag.blank?
 
     tags = tag.split(',')
 
-    sort_param = sort.present? ? "&sort=#{sort}" : ""
+    sort_param = sort.present? ? "&sort=#{sort}" : ''
 
     urls = tags.map { |t| create_url_by_tag(t) }
 
-    return urls.map { |url| fetch_feed(url + sort_param) }
+    urls.map { |url| fetch_feed(url + sort_param) }
   end
 
   private
@@ -28,12 +28,12 @@ class Hatebu
     rss = open(@url, 'User-Agent' => ua)
     feed = RSS::Parser.parse(rss)
     rss.close
-    return feed.items.map do |i|
+    feed.items.map do |i|
       { link: i.link, title: i.title, desc: i.description, date: i.dc_date }
     end
   end
 
   def create_url_by_tag(tag)
-    return "#{BASE_URL}?q=#{tag}&mode=rss"
+    "#{BASE_URL}?q=#{tag}&mode=rss"
   end
 end
