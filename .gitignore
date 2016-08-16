@@ -19,3 +19,7 @@
 
 # Ignore Byebug command history file.
 .byebug_history
+
+# Ignore rubocop_todo.yml (auto-generated)
+.rubocop_todo.yml
+
