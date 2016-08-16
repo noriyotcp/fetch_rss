@@ -17,6 +17,14 @@ It fetches articles from:
 - http://b.hatena.ne.jp/hotentry/it.rss
 - http://hnrss.org/newest
 
+**With parameters**
+
+``?tag=`` (for both hatebu and hnrss)
+``&sort=`` (for hatebu)
+``&points=`` (for hnrss)
+
+ex. https://yourapp.com/?tag=Swift&points=100&sort=popular
+
 ---------
 
 ### get 'hatebu', to: 'hatebu#fetch'
