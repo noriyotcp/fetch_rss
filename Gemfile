@@ -27,6 +27,8 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-doc'
   gem 'pry-rails'
+  gem 'rubocop'
+  gem 'rails_best_practices'
 end
 
 group :development do
